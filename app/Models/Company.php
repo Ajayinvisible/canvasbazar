@@ -22,4 +22,9 @@ class Company extends Model
     {
         return $this->hasOne(CompanyBranding::class);
     }
+
+    public function contact(): HasOne
+    {
+        return $this->hasOne(CompanyBranding::class);
+    }
 }
