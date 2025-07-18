@@ -21,7 +21,6 @@ use Filament\Forms\Components\Tabs\Tab;
 use Filament\Support\Enums\IconPosition;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
-
 use function Laravel\Prompts\select;
 
 class CompanyResource extends Resource

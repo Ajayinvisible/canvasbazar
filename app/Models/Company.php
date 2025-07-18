@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Company extends Model
 {
@@ -15,4 +17,9 @@ class Company extends Model
         'meta_description',
         'google_map',
     ];
+
+    public function branding():HasOne
+    {
+        return $this->hasOne(CompanyBranding::class);
+    }
 }
