@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Company extends Model
@@ -23,8 +24,13 @@ class Company extends Model
         return $this->hasOne(CompanyBranding::class);
     }
 
-    public function contact(): HasOne
+    public function contact(): HasMany
     {
-        return $this->hasOne(CompanyBranding::class);
+        return $this->hasMany(CompanyBranding::class);
+    }
+
+    public function social(): HasMany
+    {
+        return $this->hasMany(SocialMedia::class);
     }
 }

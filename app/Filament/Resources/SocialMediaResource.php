@@ -2,62 +2,61 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CompanyContactResource\Pages;
-use App\Filament\Resources\CompanyContactResource\RelationManagers;
+use App\Filament\Resources\SocialMediaResource\Pages;
+use App\Filament\Resources\SocialMediaResource\RelationManagers;
 use App\Models\Company;
-use App\Models\CompanyContact;
+use App\Models\SocialMedia;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 
-class CompanyContactResource extends Resource
+class SocialMediaResource extends Resource
 {
-    protected static ?string $model = CompanyContact::class;
+    protected static ?string $model = SocialMedia::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-phone';
+    protected static ?string $navigationIcon = 'heroicon-o-device-phone-mobile';
 
     protected static ?string $navigationGroup = 'Company';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Company Branding')
+                Section::make('Company Social Media')
                     ->schema([
                         Select::make('company_id')
                             ->label('Company')->required()
                             ->relationship('company', 'name')
                             ->default(fn() => Company::query()->value('id'))
-                            ->required(),
-                        TextInput::make('number')
                             ->required()
-                            ->rules('max:15'),
-                        Select::make('type')->required()
-                            ->options([
-                                'phone' => 'Phone',
-                                'whatsapp' => 'Whatsapp',
-                                'viber' => 'Viber',
-                                'support' => 'Support'
-                            ]),
+                            ->columnSpanFull(),
+                        TextInput::make('platform')
+                            ->label('Social Media Platform')
+                            ->required(),
+                        TextInput::make('link')
+                            ->label('Social Media Link')
+                            ->rules('url')
+                            ->required(),
                         FileUpload::make('icon')
-                            ->rules('image|mimes:png|max:150'),
-                        Toggle::make('status'),
-
-                    ])->columns(2)
+                            ->label('Social Median Icon')
+                            ->rules('image|mimes:png,jpg|max:150')
+                            ->columnSpanFull(),
+                        Toggle::make('status')
+                    ])->columns(2),
             ]);
     }
 
@@ -68,16 +67,15 @@ class CompanyContactResource extends Resource
                 TextColumn::make('id'),
                 TextColumn::make('company.name'),
                 ImageColumn::make('icon'),
-                TextColumn::make('number')->sortable(),
-                TextColumn::make('type')->sortable(),
-                ToggleColumn::make('status')->sortable()
+                TextColumn::make('platform')->sortable(),
+                TextColumn::make('link')->sortable(),
+                ToggleColumn::make('status')->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -96,9 +94,9 @@ class CompanyContactResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCompanyContacts::route('/'),
-            'create' => Pages\CreateCompanyContact::route('/create'),
-            'edit' => Pages\EditCompanyContact::route('/{record}/edit'),
+            'index' => Pages\ListSocialMedia::route('/'),
+            'create' => Pages\CreateSocialMedia::route('/create'),
+            'edit' => Pages\EditSocialMedia::route('/{record}/edit'),
         ];
     }
 }

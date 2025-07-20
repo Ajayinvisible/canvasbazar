@@ -26,6 +26,10 @@ class CompanyBrandingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
 
+    protected static ?string $navigationGroup = 'Company';
+
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
