@@ -67,9 +67,9 @@ class SocialMediaResource extends Resource
                 TextColumn::make('id'),
                 TextColumn::make('company.name'),
                 ImageColumn::make('icon'),
-                TextColumn::make('platform')->sortable(),
-                TextColumn::make('link')->sortable(),
-                ToggleColumn::make('status')->sortable(),
+                TextColumn::make('platform')->sortable()->searchable(),
+                TextColumn::make('link')->sortable()->searchable(),
+                ToggleColumn::make('status')->sortable()->searchable(),
             ])
             ->filters([
                 //
