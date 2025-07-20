@@ -28,6 +28,8 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
+    protected static ?string $navigationGroup = 'Home Page Features';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -54,7 +56,7 @@ class ServiceResource extends Resource
             ->columns([
                 TextColumn::make('id')->sortable(),
                 ImageColumn::make('icon')->sortable(),
-                TextColumn::make('title')->sortable(),
+                TextColumn::make('title')->sortable()->searchable(),
                 ToggleColumn::make('status')->sortable()
             ])
             ->filters([
