@@ -27,6 +27,8 @@ class HomeBannerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
+    protected static ?string $navigationGroup = 'Home Page Features';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -62,8 +64,8 @@ class HomeBannerResource extends Resource
             ->columns([
                 TextColumn::make('id')->sortable(),
                 ImageColumn::make('image'),
-                TextColumn::make('title')->sortable(),
-                TextColumn::make('banner_for')->sortable(),
+                TextColumn::make('title')->sortable()->searchable(),
+                TextColumn::make('banner_for')->sortable()->searchable(),
                 ToggleColumn::make('status')->sortable(),
             ])
             ->filters([

@@ -27,6 +27,8 @@ class HeroSliderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
 
+    protected static ?string $navigationGroup = 'Home Page Features';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -77,8 +79,8 @@ class HeroSliderResource extends Resource
             ->columns([
                 TextColumn::make('id')->sortable(),
                 ImageColumn::make('image')->sortable(),
-                TextColumn::make('title_blue')->sortable(),
-                TextColumn::make('title_black')->sortable(),
+                TextColumn::make('title_blue')->sortable()->searchable(),
+                TextColumn::make('title_black')->sortable()->searchable(),
                 ToggleColumn::make('status')->sortable()
             ])
             ->filters([
