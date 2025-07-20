@@ -68,9 +68,9 @@ class CompanyContactResource extends Resource
                 TextColumn::make('id'),
                 TextColumn::make('company.name'),
                 ImageColumn::make('icon'),
-                TextColumn::make('number')->sortable(),
-                TextColumn::make('type')->sortable(),
-                ToggleColumn::make('status')->sortable()
+                TextColumn::make('number')->sortable()->searchable(),
+                TextColumn::make('type')->sortable()->searchable(),
+                ToggleColumn::make('status')->sortable()->searchable()
             ])
             ->filters([
                 //
