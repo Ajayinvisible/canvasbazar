@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Menu extends Model
 {
@@ -12,4 +13,9 @@ class Menu extends Model
         'status',
         'menu_position',
     ];
+
+    public function pages(): HasOne
+    {
+        return $this->hasOne(Page::class);
+    }
 }
