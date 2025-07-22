@@ -33,4 +33,28 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
+
+    /**
+     * Get the category name with indentation based on nesting level.
+     */
+    public function getIndentedNameAttribute(): string
+    {
+        $depth = 0;
+        $parent = $this->parent;
+
+        while ($parent) {
+            $depth++;
+            $parent = $parent->parent;
+        }
+
+        return str_repeat('- ', $depth) . $this->name;
+    }
+
+    /**
+     * Get the parent category name with indentation.
+     */
+    public function getIndentedParentNameAttribute(): ?string
+    {
+        return $this->parent ? $this->parent->indented_name : null;
+    }
 }

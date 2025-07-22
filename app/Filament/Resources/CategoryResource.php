@@ -50,7 +50,7 @@ class CategoryResource extends Resource
                                 ->schema([
                                     Select::make('parent_id')
                                         ->label('Parent Category')
-                                        ->options(Category::all()->pluck('name', 'id'))
+                                        ->options(self::getNestedCategoryOptions())
                                         ->nullable(),
 
                                     Grid::make(2)->schema([
@@ -111,9 +111,15 @@ class CategoryResource extends Resource
             ->columns([
                 TextColumn::make('id')->searchable()->sortable(),
                 ImageColumn::make('image'),
-                TextColumn::make('name')->searchable()->sortable(),
+                TextColumn::make('indented_name') // Replaces raw name
+                    ->label('Name')
+                    ->sortable(query: fn($query, $direction) => $query->orderBy('name', $direction))
+                    ->searchable(),
                 TextColumn::make('slug')->searchable()->sortable(),
-                TextColumn::make('parent.name')->label('Parent Category')->sortable()->searchable(),
+                TextColumn::make('indented_parent_name') // Replaces parent.name
+                    ->label('Parent Category')
+                    ->sortable()
+                    ->searchable(),
                 ToggleColumn::make('status')->sortable()
             ])
             ->filters([
@@ -148,5 +154,20 @@ class CategoryResource extends Resource
             'create' => Pages\CreateCategory::route('/create'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNestedCategoryOptions($parentId = null, $prefix = ''): array
+    {
+        $categories = Category::where('parent_id', $parentId)->get();
+
+        $options = [];
+
+        foreach ($categories as $category) {
+            $options[$category->id] = $prefix . $category->name;
+            $children = self::getNestedCategoryOptions($category->id, $prefix . '- ');
+            $options += $children;
+        }
+
+        return $options;
     }
 }
