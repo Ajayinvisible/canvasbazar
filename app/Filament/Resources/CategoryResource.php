@@ -73,6 +73,7 @@ class CategoryResource extends Resource
                                     RichEditor::make('short_intro')
                                         ->nullable()
                                 ])->columnSpan(2),
+
                             Section::make('Category Icon')
                                 ->description('Category Icon or Image')
                                 ->schema([
@@ -81,7 +82,9 @@ class CategoryResource extends Resource
                                         ->nullable(),
                                     Toggle::make('status')
                                 ])->columnSpan(1)
+                                
                         ])->columns(3),
+
                     Tab::make('Category Information')
                         ->icon('heroicon-o-information-circle')
                         ->iconPosition(IconPosition::Before)

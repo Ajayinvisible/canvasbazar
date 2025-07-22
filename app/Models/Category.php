@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -56,5 +57,13 @@ class Category extends Model
     public function getIndentedParentNameAttribute(): ?string
     {
         return $this->parent ? $this->parent->indented_name : null;
+    }
+
+    /**
+     * products
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }
