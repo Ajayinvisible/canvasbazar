@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Variant extends Model
@@ -22,5 +23,10 @@ class Variant extends Model
     public function canvas(): HasMany
     {
         return $this->hasMany(Canvas::class);
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_variant');
     }
 }
