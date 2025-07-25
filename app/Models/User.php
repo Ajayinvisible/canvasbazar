@@ -65,4 +65,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function usedCoupons()
+    {
+        return $this->belongsToMany(Coupon::class)->withPivot('used_at')->withTimestamps();
+    }
 }
